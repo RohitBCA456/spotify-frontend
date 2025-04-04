@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playlistable - Mood Generator</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #0f0e17;
+        color: white;
+        text-align: center;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #1e1b2e;
+        padding: 35px;
+        border-radius: 18px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        transition: 0.3s;
+      }
+
+      h2 {
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #ff9f1c;
+      }
+
+      input {
+        width: 75%;
+        padding: 12px;
+        border: none;
+        border-radius: 30px;
+        background: #2b283e;
+        color: white;
+        font-size: 16px;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      input:focus {
+        background: #3b3756;
+      }
+
+      .input-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      button {
+        background: linear-gradient(135deg, #ff6b6b, #ff9f1c);
+        color: white;
+        border: none;
+        padding: 12px 22px;
+        border-radius: 30px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background: linear-gradient(135deg, #e63946, #ff6b6b);
+        transform: scale(1.05);
+      }
+
+      .mood-box {
+        background: #2a213c;
+        padding: 15px;
+        border-radius: 12px;
+        margin: 8px 0;
+        font-size: 16px;
+        text-align: left;
+        transition: 0.3s;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .mood-box:hover {
+        background: #423362;
+        transform: scale(1.05);
+        color: #ff9f1c;
+      }
+
+      #cameraSection {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      video {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 12px;
+        display: block;
+        margin: auto;
+        box-shadow: 0 4px 10px rgba(255, 159, 28, 0.4);
+      }
+
+      .camera-controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      canvas {
+        display: none;
+      }
+
+      /* Spacing between buttons */
+      #seePlaylistButton {
+        margin-top: 20px;
+        display: block;
+      }
+
+      #openCameraButton {
+        margin-top: 15px;
+        display: block;
+      }
+
+      /* Playlist container styles */
+      #playlistContainer {
+        margin-top: 25px;
+        display: none;
+        background: #29253f;
+        padding: 20px;
+        border-radius: 15px;
+      }
+
+      /* Grid-based playlist layout */
+      #playlistItems {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      /* Playlist item styling */
+      .playlist-item {
+        background: #2a213c;
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 14px;
+        text-align: center;
+        transition: 0.3s;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 180px; /* Ensuring equal height */
+      }
+
+      .playlist-item:hover {
+        background: #3a2d4e;
+        transform: scale(1.05);
+      }
+
+      /* Ensure images in playlist are uniform */
+      .playlist-item img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Mood Generator 🎶</h2>
+      <div class="input-container">
+        <input type="text" id="moodInput" placeholder="Describe your mood..." />
+        <button id="generateButton">Generate</button>
+      </div>
+
+      <h3 style="color: #ff9f1c;">Mood Examples</h3>
+      <div class="mood-box">🌃 Midnight motorcycle ride in the city</div>
+      <div class="mood-box">☕ Sipping coffee at a rainy day cafe</div>
+      <div class="mood-box">💤 Soothing lullabies for a restless night</div>
+      <div class="mood-box">🔥 Inspired/Motivated</div>
+
+      <button type="button" id="openCameraButton">📷 Open Camera</button>
+
+      <div id="cameraSection">
+        <video id="video" autoplay></video>
+        <div class="camera-controls">
+          <button type="button" id="captureButton">📸 Capture</button>
+          <button type="button" id="closeCameraButton">❌ Close Camera</button>
+        </div>
+        <canvas id="canvas"></canvas>
+      </div>
+
+      <button id="seePlaylistButton">🎵 See Generated Playlist</button>
+
+      <div id="playlistContainer">
+        <h3 style="color: #ff9f1c;">Generated Playlist</h3>
+        <div id="playlistItems"></div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
