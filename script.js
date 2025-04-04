@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const response = await fetch(
-          "https://ai-playlist-recommender.vercel.app/user/cameraData",
+          "https://ai-playlist-recommender-three.vercel.app/user/cameraData",
           {
             method: "POST",
             body: formData,
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchPlaylist() {
     try {
       const response = await fetch(
-        "https://ai-playlist-recommender.vercel.app/user/getPlaylist"
+        "https://ai-playlist-recommender-three.vercel.app/user/getPlaylist"
       );
       const data = await response.json();
 
