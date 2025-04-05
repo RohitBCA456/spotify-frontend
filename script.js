@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("seePlaylistButton")
     .addEventListener("click", fetchPlaylist);
+  document
+    .getElementById("generateButton")
+    .addEventListener("click", fetchSecondPlaylist);
   let mood = document
     .getElementById("brandy")
     .addEventListener("click", brandyPlaylist);
@@ -146,6 +149,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      const playlistContainer = document.getElementById("playlistContainer");
+      const playlistItems = document.getElementById("playlistItems");
+
       if (!data.playlist || data.playlist.length === 0) {
         playlistItems.innerHTML = "<p>No playlist found</p>";
       } else {
@@ -161,6 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
           )
           .join("");
       }
+      playlistContainer.style.display = "block";
     } catch (error) {
       console.error("Error fetching playlist:", error);
     }
