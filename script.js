@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("seePlaylistButton")
     .addEventListener("click", fetchPlaylist);
+  let mood = document
+    .getElementById("brandy")
+    .addEventListener("click", brandyPlaylist);
+  document.getElementById("moodInput").value;
 
   function generateMood(event) {
     event.preventDefault();
@@ -117,6 +121,45 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       playlistContainer.style.display = "block";
+    } catch (error) {
+      console.error("Error fetching playlist:", error);
+    }
+  }
+
+  async function brandyPlaylist() {
+    window.location.href =
+      "https://open.spotify.com/playlist/6K7udem5mThlkRm2RhEC6m?si=CaIbtwxkQbydGtkpk9d0yw&pi=Pi8rO9cnQkWEk";
+  }
+  async function fetchSecondPlaylist() {
+    try {
+      const response = await fetch(
+        "https://ai-playlist-recommender-three.vercel.app/user/playlistByMood",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ mood: mood }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      if (!data.playlist || data.playlist.length === 0) {
+        playlistItems.innerHTML = "<p>No playlist found</p>";
+      } else {
+        playlistItems.innerHTML = data.playlist
+          .map(
+            (playlist) => `
+            <div class="playlist-item">
+              <p><strong>${playlist.name}</strong></p>
+              <img src="${playlist.image}" alt="Playlist Image" width="100">
+              <p><a href="${playlist.url}" target="_blank">Listen on Spotify</a></p>
+            </div>
+          `
+          )
+          .join("");
+      }
     } catch (error) {
       console.error("Error fetching playlist:", error);
     }
