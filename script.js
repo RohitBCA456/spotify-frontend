@@ -15,10 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("generateButton")
     .addEventListener("click", fetchSecondPlaylist);
-  let mood = document
+  document
     .getElementById("brandy")
     .addEventListener("click", brandyPlaylist);
-  document.getElementById("moodInput").value;
+  let mood = document.getElementById("moodInput").value;
 
   function generateMood(event) {
     event.preventDefault();
