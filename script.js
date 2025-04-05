@@ -90,6 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: { Accept: "application/json" },
           }
         );
+        if(response.ok){
+          alert("playlist generated successfully!");
+        }
       } catch (error) {
         console.error("Error uploading image:", error);
       }
