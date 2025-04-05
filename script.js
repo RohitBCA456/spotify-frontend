@@ -132,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   async function fetchSecondPlaylist() {
     try {
+      console.log(mood);
       const response = await fetch(
         "https://ai-playlist-recommender-three.vercel.app/user/playlistByMood",
         {
