@@ -7,53 +7,59 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
 
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         font-family: "Poppins", sans-serif;
         background-color: #0f0e17;
         color: white;
-        text-align: center;
         margin: 0;
-        padding: 20px;
+        padding: 0;
       }
 
       .container {
-        max-width: 600px;
+        max-width: 700px;
         margin: auto;
+        padding: 30px 20px;
         background: #1e1b2e;
-        padding: 35px;
-        border-radius: 18px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        margin-top: 40px;
+        margin-bottom: 40px;
         transition: 0.3s;
       }
 
       h2 {
-        font-size: 30px;
+        font-size: 32px;
         font-weight: 700;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         color: #ff9f1c;
       }
 
+      .input-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        margin-bottom: 25px;
+      }
+
       input {
-        width: 75%;
-        padding: 12px;
+        flex: 1 1 300px;
+        padding: 14px 18px;
         border: none;
         border-radius: 30px;
         background: #2b283e;
         color: white;
         font-size: 16px;
-        outline: none;
-        transition: 0.3s;
+        transition: background 0.3s;
       }
 
       input:focus {
         background: #3b3756;
-      }
-
-      .input-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
+        outline: none;
       }
 
       button {
@@ -63,10 +69,9 @@
         padding: 12px 22px;
         border-radius: 30px;
         font-size: 16px;
+        font-weight: bold;
         cursor: pointer;
         transition: 0.3s;
-        font-weight: bold;
-        margin-top: 10px;
       }
 
       button:hover {
@@ -76,20 +81,26 @@
 
       .mood-box {
         background: #2a213c;
-        padding: 15px;
+        padding: 14px 20px;
         border-radius: 12px;
-        margin: 8px 0;
+        margin: 10px 0;
         font-size: 16px;
         text-align: left;
-        transition: 0.3s;
         cursor: pointer;
         font-weight: 500;
+        transition: 0.3s;
       }
 
       .mood-box:hover {
         background: #423362;
-        transform: scale(1.05);
+        transform: scale(1.03);
         color: #ff9f1c;
+      }
+
+      #openCameraButton,
+      #seePlaylistButton {
+        margin: 20px auto 10px auto;
+        display: block;
       }
 
       #cameraSection {
@@ -102,8 +113,8 @@
         width: 100%;
         max-width: 400px;
         border-radius: 12px;
-        display: block;
         margin: auto;
+        display: block;
         box-shadow: 0 4px 10px rgba(255, 159, 28, 0.4);
       }
 
@@ -118,40 +129,25 @@
         display: none;
       }
 
-      /* Spacing between buttons */
-      #seePlaylistButton {
-        margin-top: 20px;
-        display: block;
-      }
-
-      #openCameraButton {
-        margin-top: 15px;
-        display: block;
-      }
-
-      /* Playlist container styles */
       #playlistContainer {
-        margin-top: 25px;
+        margin-top: 30px;
         display: none;
         background: #29253f;
-        padding: 20px;
+        padding: 25px;
         border-radius: 15px;
       }
 
-      /* Grid-based playlist layout */
       #playlistItems {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 15px;
-        margin-top: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
       }
 
-      /* Playlist item styling */
       .playlist-item {
         background: #2a213c;
         padding: 15px;
         border-radius: 12px;
-        font-size: 14px;
         text-align: center;
         transition: 0.3s;
         cursor: pointer;
@@ -159,7 +155,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        min-height: 180px; /* Ensuring equal height */
+        min-height: 200px;
       }
 
       .playlist-item:hover {
@@ -167,19 +163,35 @@
         transform: scale(1.05);
       }
 
-      /* Ensure images in playlist are uniform */
       .playlist-item img {
         width: 100px;
         height: 100px;
         object-fit: cover;
-        border-radius: 8px;
-        margin-bottom: 10px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+      }
+
+      @media screen and (max-width: 500px) {
+        h2 {
+          font-size: 26px;
+        }
+
+        button,
+        input {
+          font-size: 14px;
+        }
+
+        .playlist-item {
+          min-height: 180px;
+        }
       }
     </style>
   </head>
+
   <body>
     <div class="container">
       <h2>Mood Generator 🎶</h2>
+
       <div class="input-container">
         <input type="text" id="moodInput" placeholder="Describe your mood..." />
         <button id="generateButton">Generate</button>
