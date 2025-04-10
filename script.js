@@ -92,6 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         if(response.ok){
           alert("playlist generated successfully!");
+          const data = response.json();
+          const mood = data.mood;
+          const moodText = document.getElementById('moodText');
+          moodText = mood;
         }
       } catch (error) {
         console.error("Error uploading image:", error);

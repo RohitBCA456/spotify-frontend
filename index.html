@@ -197,7 +197,7 @@
         <button id="generateButton">Generate</button>
       </div>
 
-      <h3 style="color: #ff9f1c;">Mood Examples</h3>
+      <h3 style="color: #ff9f1c">Mood Examples</h3>
       <div class="mood-box">🌃 Midnight motorcycle ride in the city</div>
       <div class="mood-box">☕ Sipping coffee at a rainy day cafe</div>
       <div class="mood-box">💤 Soothing lullabies for a restless night</div>
@@ -210,6 +210,14 @@
         <div class="camera-controls">
           <button type="button" id="captureButton">📸 Capture</button>
           <button type="button" id="closeCameraButton">❌ Close Camera</button>
+          <div
+            id="detectedMood"
+            style="display: none; margin-top: 20px; text-align: center"
+          >
+            <h3 style="color: #ff9f1c">
+              Detected Mood: <span id="moodText">Happy</span>
+            </h3>
+          </div>
         </div>
         <canvas id="canvas"></canvas>
       </div>
@@ -217,7 +225,7 @@
       <button id="seePlaylistButton">🎵 See Generated Playlist</button>
 
       <div id="playlistContainer">
-        <h3 style="color: #ff9f1c;">Generated Playlist</h3>
+        <h3 style="color: #ff9f1c">Generated Playlist</h3>
         <div id="playlistItems"></div>
       </div>
     </div>
