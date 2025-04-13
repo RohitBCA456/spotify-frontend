@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const data = response.json();
           const mood = data.mood;
           const moodText = document.getElementById('moodText').innerText = mood;
+          console.log(data);
           console.log(moodText);
         }
       } catch (error) {
