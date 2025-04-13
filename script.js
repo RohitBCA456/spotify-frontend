@@ -90,13 +90,15 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: { Accept: "application/json" },
           }
         );
-        if(response.ok){
+        if (response.ok) {
           alert("playlist generated successfully!");
+
           const data = await response.json();
           const mood = data.mood;
-          const moodText = document.getElementById('moodText').innerText = mood;
+          document.getElementById("moodText").innerText = mood;
+
           console.log(data);
-          console.log(moodText);
+          console.log(mood);
         }
       } catch (error) {
         console.error("Error uploading image:", error);
