@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         if(response.ok){
           alert("playlist generated successfully!");
-          const data = response.json();
+          const data = await response.json();
           const mood = data.mood;
           const moodText = document.getElementById('moodText').innerText = mood;
           console.log(data);
