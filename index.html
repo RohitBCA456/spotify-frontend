@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Playlistable - Mood Generator</title>
+    <title>Playlistable - AI Mood Music</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
 
@@ -13,116 +13,114 @@
 
       body {
         font-family: "Poppins", sans-serif;
-        background-color: #0f0e17;
+        background: linear-gradient(145deg, #1e1b2e, #0f0e17);
         color: white;
         margin: 0;
         padding: 0;
+        min-height: 100vh;
       }
 
       .container {
-        max-width: 700px;
-        margin: auto;
-        padding: 30px 20px;
-        background: #1e1b2e;
-        border-radius: 20px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-        margin-top: 40px;
-        margin-bottom: 40px;
-        transition: 0.3s;
+        max-width: 720px;
+        margin: 60px auto;
+        padding: 40px 30px;
+        background: #211f30;
+        border-radius: 25px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease-in-out;
       }
 
       h2 {
-        font-size: 32px;
+        font-size: 36px;
         font-weight: 700;
-        margin-bottom: 25px;
-        color: #ff9f1c;
+        margin-bottom: 30px;
+        color: #ff8c42;
+        text-align: center;
       }
 
       .input-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 15px;
         justify-content: center;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
       }
 
       input {
         flex: 1 1 300px;
-        padding: 14px 18px;
+        padding: 16px 20px;
         border: none;
         border-radius: 30px;
-        background: #2b283e;
+        background: #2f2c44;
         color: white;
         font-size: 16px;
         transition: background 0.3s;
       }
 
       input:focus {
-        background: #3b3756;
+        background: #403b5a;
         outline: none;
       }
 
       button {
-        background: linear-gradient(135deg, #ff6b6b, #ff9f1c);
+        background: linear-gradient(135deg, #ff6b6b, #ffa62b);
         color: white;
         border: none;
-        padding: 12px 22px;
+        padding: 14px 24px;
         border-radius: 30px;
         font-size: 16px;
-        font-weight: bold;
+        font-weight: 600;
         cursor: pointer;
-        transition: 0.3s;
+        transition: all 0.3s ease;
       }
 
       button:hover {
-        background: linear-gradient(135deg, #e63946, #ff6b6b);
-        transform: scale(1.05);
+        background: linear-gradient(135deg, #e63946, #fcbf49);
+        transform: translateY(-2px) scale(1.05);
       }
 
       .mood-box {
-        background: #2a213c;
-        padding: 14px 20px;
-        border-radius: 12px;
+        background: #2e2845;
+        padding: 16px 22px;
+        border-radius: 14px;
         margin: 10px 0;
         font-size: 16px;
-        text-align: left;
         cursor: pointer;
-        font-weight: 500;
-        transition: 0.3s;
+        transition: all 0.3s ease;
       }
 
       .mood-box:hover {
-        background: #423362;
-        transform: scale(1.03);
-        color: #ff9f1c;
+        background: #3c3160;
+        color: #ffa62b;
+        transform: translateY(-2px) scale(1.02);
       }
 
       #openCameraButton,
       #seePlaylistButton {
-        margin: 20px auto 10px auto;
+        margin: 25px auto 15px auto;
         display: block;
       }
 
       #cameraSection {
         display: none;
         text-align: center;
-        margin-top: 20px;
+        margin-top: 25px;
       }
 
       video {
         width: 100%;
-        max-width: 400px;
-        border-radius: 12px;
+        max-width: 420px;
+        border-radius: 16px;
         margin: auto;
         display: block;
-        box-shadow: 0 4px 10px rgba(255, 159, 28, 0.4);
+        box-shadow: 0 6px 15px rgba(255, 166, 43, 0.4);
       }
 
       .camera-controls {
         display: flex;
         justify-content: center;
-        gap: 15px;
-        margin-top: 15px;
+        gap: 18px;
+        margin-top: 20px;
       }
 
       canvas {
@@ -130,24 +128,26 @@
       }
 
       #playlistContainer {
-        margin-top: 30px;
+        margin-top: 40px;
         display: none;
-        background: #29253f;
-        padding: 25px;
-        border-radius: 15px;
+        background: #25203b;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease-in-out;
       }
 
       #playlistItems {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 20px;
-        margin-top: 20px;
+        gap: 24px;
+        margin-top: 25px;
       }
 
       .playlist-item {
-        background: #2a213c;
-        padding: 15px;
-        border-radius: 12px;
+        background: #2e2845;
+        padding: 18px;
+        border-radius: 14px;
         text-align: center;
         transition: 0.3s;
         cursor: pointer;
@@ -155,25 +155,37 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        min-height: 200px;
+        min-height: 220px;
       }
 
       .playlist-item:hover {
-        background: #3a2d4e;
-        transform: scale(1.05);
+        background: #403560;
+        transform: translateY(-3px) scale(1.05);
       }
 
       .playlist-item img {
         width: 100px;
         height: 100px;
         object-fit: cover;
-        border-radius: 10px;
-        margin-bottom: 12px;
+        border-radius: 12px;
+        margin-bottom: 14px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      #detectedMood {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      #detectedMood h3 {
+        color: #ffa62b;
+        font-size: 20px;
+        font-weight: 600;
       }
 
       @media screen and (max-width: 500px) {
         h2 {
-          font-size: 26px;
+          font-size: 28px;
         }
 
         button,
@@ -190,22 +202,18 @@
 
   <body>
     <div class="container">
-      <h2>Mood Generator 🎶</h2>
+      <h2>🎶 AI Playlist Generator</h2>
 
       <div class="input-container">
         <input type="text" id="moodInput" placeholder="Describe your mood..." />
         <button id="generateButton">Generate</button>
       </div>
-      <div
-        id="detectedMood"
-        style="display: none; margin-top: 20px; text-align: center"
-      >
-        <h3 style="color: #ff9f1c">
-          Detected Mood: <span id="moodText"></span>
-        </h3>
+
+      <div id="detectedMood" style="display: none;">
+        <h3>Detected Mood: <span id="moodText"></span></h3>
       </div>
 
-      <h3 style="color: #ff9f1c">Mood Examples</h3>
+      <h3 style="color: #ffa62b; text-align: center;">Mood Examples</h3>
       <div class="mood-box">🌃 Midnight motorcycle ride in the city</div>
       <div class="mood-box">☕ Sipping coffee at a rainy day cafe</div>
       <div class="mood-box">💤 Soothing lullabies for a restless night</div>
@@ -225,7 +233,7 @@
       <button id="seePlaylistButton">🎵 See Generated Playlist</button>
 
       <div id="playlistContainer">
-        <h3 style="color: #ff9f1c">Generated Playlist</h3>
+        <h3 style="color: #ffa62b; text-align: center;">Your AI-Generated Playlist</h3>
         <div id="playlistItems"></div>
       </div>
     </div>
