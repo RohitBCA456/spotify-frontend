@@ -196,6 +196,14 @@
         <input type="text" id="moodInput" placeholder="Describe your mood..." />
         <button id="generateButton">Generate</button>
       </div>
+      <div
+        id="detectedMood"
+        style="display: none; margin-top: 20px; text-align: center"
+      >
+        <h3 style="color: #ff9f1c">
+          Detected Mood: <span id="moodText"></span>
+        </h3>
+      </div>
 
       <h3 style="color: #ff9f1c">Mood Examples</h3>
       <div class="mood-box">🌃 Midnight motorcycle ride in the city</div>
@@ -210,14 +218,6 @@
         <div class="camera-controls">
           <button type="button" id="captureButton">📸 Capture</button>
           <button type="button" id="closeCameraButton">❌ Close Camera</button>
-          <div
-            id="detectedMood"
-            style="display: none; margin-top: 20px; text-align: center"
-          >
-            <h3 style="color: #ff9f1c">
-              Detected Mood: <span id="moodText">Happy</span>
-            </h3>
-          </div>
         </div>
         <canvas id="canvas"></canvas>
       </div>

@@ -95,10 +95,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const data = await response.json();
           const mood = data.mood;
-          document.getElementById("moodText").innerText = mood;
+
+          const moodText = document.getElementById("moodText");
+          const detectedMood = document.getElementById("detectedMood");
+
+          moodText.innerText = mood || "Unknown";
+          detectedMood.style.display = "block";
 
           console.log(data);
-          console.log(mood);
+          console.log("Mood received from backend:", mood);
         }
       } catch (error) {
         console.error("Error uploading image:", error);
