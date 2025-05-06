@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       if (response.ok) {
         alert("Playlist generated successfully!");
+        document.getElementById("moodInput").value = "";
       }
     } catch (error) {
       console.error("Error fetching playlist:", error);
@@ -42,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function openCamera() {
+    document.getElementById("playlistContainer").style.display = "none";
+
     document.getElementById("cameraSection").style.display = "block";
     const video = document.getElementById("video");
 
