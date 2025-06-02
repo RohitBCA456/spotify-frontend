@@ -1,18 +1,100 @@
 document.addEventListener("DOMContentLoaded", () => {
-  document
-    .getElementById("generateButton")
-    .addEventListener("click", generateMood);
-  document
-    .getElementById("openCameraButton")
-    .addEventListener("click", openCamera);
-  document.getElementById("captureButton").addEventListener("click", takePhoto);
-  document
-    .getElementById("closeCameraButton")
-    .addEventListener("click", resetCamera);
-  document
-    .getElementById("seePlaylistButton")
-    .addEventListener("click", fetchPlaylist);
-  document.getElementById("brandy").addEventListener("click", brandyPlaylist);
+  const generateButton = document.getElementById("generateButton");
+  if (generateButton) {
+    generateButton.addEventListener("click", generateMood);
+  }
+
+  const openCameraButton = document.getElementById("openCameraButton");
+  if (openCameraButton) {
+    openCameraButton.addEventListener("click", openCamera);
+  }
+
+  const captureButton = document.getElementById("captureButton");
+  if (captureButton) {
+    captureButton.addEventListener("click", takePhoto);
+  }
+
+  const closeCameraButton = document.getElementById("closeCameraButton");
+  if (closeCameraButton) {
+    closeCameraButton.addEventListener("click", resetCamera);
+  }
+
+  const seePlaylistButton = document.getElementById("seePlaylistButton");
+  if (seePlaylistButton) {
+    seePlaylistButton.addEventListener("click", fetchPlaylist);
+  }
+
+  const brandyButton = document.getElementById("brandy");
+  if (brandyButton) {
+    brandyButton.addEventListener("click", brandyPlaylist);
+  }
+
+  const registerForm = document.getElementById("register-form");
+  if (registerForm) {
+    registerForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("signup-username").value.trim();
+      const email = document.getElementById("signup-email").value.trim();
+      const password = document.getElementById("signup-password").value;
+
+      const payload = { username, email, password };
+
+      try {
+        const response = await fetch("http://localhost:5000/user/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert("Signup successful!");
+          window.location.href = "http://127.0.0.1:5500/loginPage.html";
+        } else {
+          alert(result.message || "Signup failed!");
+        }
+      } catch (error) {
+        console.error("Error during signup:", error);
+        alert("Something went wrong. Please try again later.");
+      }
+    });
+  }
+
+  const loginForm = document.getElementById("login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      const payload = { username, password };
+      console.log(payload);
+
+      try {
+        const response = await fetch("http://localhost:5000/user/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          credentials: "include",
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert("Login successful!");
+          window.location.href = "http://127.0.0.1:5500/mainPage.html";
+        } else {
+          alert(result.message || "Login failed!");
+        }
+      } catch (error) {
+        console.error("Login error:", error);
+        alert("An error occurred. Please try again.");
+      }
+    });
+  }
 
   async function generateMood(event) {
     event.preventDefault();
@@ -21,18 +103,17 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Mood input is empty!");
       return;
     }
-    console.log("Mood Generated:", mood);
+
     try {
       const response = await fetch(
-        "https://ai-playlist-recommender-three.vercel.app/playlist/playlistByMood",
+        "http://localhost:5000/playlist/playlistByMood",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ mood: mood }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mood }),
         }
       );
+
       if (response.ok) {
         alert("Playlist generated successfully!");
         document.getElementById("moodInput").value = "";
@@ -44,10 +125,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function openCamera() {
     document.getElementById("playlistContainer").style.display = "none";
-
     document.getElementById("cameraSection").style.display = "block";
-    const video = document.getElementById("video");
 
+    const video = document.getElementById("video");
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then((stream) => {
@@ -79,34 +159,27 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      console.log("Image captured, sending to server...");
-
       const formData = new FormData();
       formData.append("image", blob, "photo.png");
 
       try {
         const response = await fetch(
-          "https://ai-playlist-recommender-three.vercel.app/playlist/cameraData",
+          "http://localhost:5000/playlist/cameraData",
           {
             method: "POST",
             body: formData,
             headers: { Accept: "application/json" },
+            credentials: "include",
           }
         );
-        if (response.ok) {
-          alert("playlist generated successfully!");
 
+        if (response.ok) {
+          alert("Playlist generated successfully!");
           const data = await response.json();
           const mood = data.mood;
 
-          const moodText = document.getElementById("moodText");
-          const detectedMood = document.getElementById("detectedMood");
-
-          moodText.innerText = mood || "Unknown";
-          detectedMood.style.display = "block";
-
-          console.log(data);
-          console.log("Mood received from backend:", mood);
+          document.getElementById("moodText").innerText = mood || "Unknown";
+          document.getElementById("detectedMood").style.display = "block";
         }
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -129,9 +202,14 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchPlaylist() {
     try {
       const response = await fetch(
-        "https://ai-playlist-recommender-three.vercel.app/playlist/getPlaylist"
+        "http://localhost:5000/playlist/getPlaylist",
+        {
+          method: "GET",
+          credentials: "include", // this is critical for sending cookies
+        }
       );
-      const data = await response.json();
+
+      const data = await response.json(); // response now defined correctly
 
       const playlistContainer = document.getElementById("playlistContainer");
       const playlistItems = document.getElementById("playlistItems");
@@ -158,108 +236,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  async function brandyPlaylist() {
+  function brandyPlaylist() {
     window.location.href =
       "https://open.spotify.com/playlist/6K7udem5mThlkRm2RhEC6m?si=CaIbtwxkQbydGtkpk9d0yw&pi=Pi8rO9cnQkWEk";
   }
 
-  document
-    .getElementById("register-form")
-    .addEventListener("submit", async function (e) {
-      e.preventDefault(); // prevent page reload
-
-      const username = document.getElementById("signup-username").value.trim();
-      const email = document.getElementById("signup-email").value.trim();
-      const password = document.getElementById("signup-password").value;
-
-      // Construct payload
-      const payload = {
-        username,
-        email,
-        password,
-      };
-
-      try {
-        const response = await fetch(
-          "https://ai-playlist-recommender-three.vercel.app/user/register",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          }
-        );
-
-        const result = await response.json();
-
-        if (response.ok) {
-          alert("Signup successful!");
-          // Redirect to login or home
-          window.location.href = "/loginPage";
-        } else {
-          alert(result.message || "Signup failed!");
-        }
-      } catch (error) {
-        console.error("Error during signup:", error);
-        alert("Something went wrong. Please try again later.");
-      }
-    });
-
-  document
-    .getElementById("login-form")
-    .addEventListener("submit", async function (e) {
-      e.preventDefault();
-
-      const username = document.getElementById("login-username").value.trim();
-      const password = document.getElementById("login-password").value;
-
-      const payload = {
-        username,
-        password,
-      };
-
-      try {
-        const response = await fetch(
-          "https://ai-playlist-recommender-three.vercel.app/user/login",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          }
-        );
-
-        const result = await response.json();
-
-        if (response.ok) {
-          alert("Login successful!");
-          // You can store token or session here if needed:
-          // localStorage.setItem("token", result.token);
-          window.location.href = "/mainPage"; // or any other page
-        } else {
-          alert(result.message || "Login failed!");
-        }
-      } catch (error) {
-        console.error("Login error:", error);
-        alert("An error occurred. Please try again.");
-      }
-    });
-
   async function logout() {
-    const response = await fetch(
-      "https://ai-playlist-recommender-three.vercel.app/user/logout",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    );
+    const response = await fetch("http://localhost:5000/user/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
     if (response.ok) {
-      window.location.href = "/loginPage";
+      window.location.href = "http://127.0.0.1:5500/loginPage.html";
     }
   }
 });
