@@ -240,16 +240,29 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href =
       "https://open.spotify.com/playlist/6K7udem5mThlkRm2RhEC6m?si=CaIbtwxkQbydGtkpk9d0yw&pi=Pi8rO9cnQkWEk";
   }
-
-  async function logout() {
-    const response = await fetch("http://localhost:5000/user/logout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
-
-    if (response.ok) {
-      window.location.href = "http://127.0.0.1:5500/loginPage.html";
-    }
-  }
 });
+
+async function logout() {
+  const response = await fetch("http://localhost:5000/user/logout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+
+  if (response.ok) {
+    window.location.href = "http://127.0.0.1:5500/loginPage.html";
+  }
+}
+
+window.userInput = function (number) {
+  if (number === 1) {
+    window.location.href =
+      "https://open.spotify.com/playlist/02ydrHrY3LTYPp6zT1JoiS?si=2nxE3k3NSsWPX0PMAZfAow";
+  } else if (number === 2) {
+    window.location.href =
+      "https://open.spotify.com/playlist/47S4MBG0EEXwA0GdJUA4Ur?si=cTeFIJEVTBWkkFvmdr5L6g";
+  } else {
+    window.location.href =
+      "https://open.spotify.com/album/3qTwTH3YP8YraNmD22DpqI?si=2e224fd2b65546e5";
+  }
+};
